@@ -5,6 +5,8 @@ def parse_args():
     args = ArgumentParser()
 
     args.add_argument("file", help="The location of the file to be parsed.")
+    
+    # Modes
     args.add_argument(
         "--codons",
         action="store_true",
@@ -17,15 +19,18 @@ def parse_args():
         help="Identify open reading frames (ORFs) by pairing start codons with in-frame stop codons."
     )
 
+    # Optional flag
+    args.add_argument("--rna",action="store_true", default=False, help="Set the codon search mode to RNA mode.")
+
     return args.parse_args()
 
 if __name__ == "__main__":
     args = parse_args()
     
     if args.orf:
-        sequences = reader.parse_orf(args.file)
+        sequences = reader.parse_orf(args.file, args.rna)
         print(sequences)
 
     if args.codons:
-        codons = reader.parse_codons(args.file)
+        codons = reader.parse_codons(args.file, args.rna)
         formatter.print_codons(codons)

@@ -12,7 +12,7 @@ def load_sequence(sequence_location):
     
     return "".join(sequence_lines).upper()
 
-def parse_orf(sequence_location):
+def parse_orf(sequence_location, rna):
     sequence = load_sequence(sequence_location)
 
     i = 0
@@ -22,21 +22,21 @@ def parse_orf(sequence_location):
     while i < n - 2:
         codon = sequence[i:i+3]
         if not codon_matching:
-            if codon == "ATG":
+            if (not rna and codon == "ATG") or (rna and codon == "AUG"):
                 codon_matching = True
                 start = i
                 i += 3
                 continue
             i += 1
         else:
-            if codon in ("TAA", "TAG", "TGA"):
+            if (not rna and codon in ("TAA", "TAG", "TGA")) or (rna and codon in ("UAA", "UAG", "UGA")):
                 codon_matching = False
                 indexes.append([start, i])
             i += 3
 
     return indexes
 
-def parse_codons(sequence_location):
+def parse_codons(sequence_location, rna):
     sequence = load_sequence(sequence_location)
 
     i = 0
@@ -47,10 +47,10 @@ def parse_codons(sequence_location):
     }
     while i < n - 2:
         codon = sequence[i:i+3]
-        if codon == "ATG":
+        if (not rna and codon == "ATG") or (rna and codon == "AUG"):
             indexes["start"].append(i)   
 
-        if codon in ("TAA", "TAG", "TGA"):
+        if (not rna and codon in ("TAA", "TAG", "TGA")) or (rna and codon in ("UAA", "UAG", "UGA")):
              indexes["stop"].append([i, codon])   
         
         i += 3

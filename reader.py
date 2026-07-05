@@ -12,8 +12,8 @@ def load_sequence(sequence_location):
     
     return "".join(sequence_lines).upper()
 
-if __name__ == "__main__":
-    sequence = load_sequence("test_data/zika_thailand_2006_complete.fasta")
+def parse_fasta(sequence_location):
+    sequence = load_sequence(sequence_location)
 
     i = 0
     n = len(sequence)
@@ -34,4 +34,4 @@ if __name__ == "__main__":
                 indexes.append([start, i])
             i += 3
 
-    print(indexes)
+    return indexes

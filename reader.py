@@ -1,7 +1,7 @@
-def load_sequence(file_location):
+def load_sequence(sequence_location):
     sequence_lines = []
 
-    with open(file_location) as fp:
+    with open(sequence_location) as fp:
         for line in fp:
             cleaned_line = line.strip()
 
@@ -13,14 +13,14 @@ def load_sequence(file_location):
     return "".join(sequence_lines).upper()
 
 if __name__ == "__main__":
-    file = load_sequence("test_data/zika_thailand_2006_complete.fasta")
+    sequence = load_sequence("test_data/zika_thailand_2006_complete.fasta")
 
     i = 0
-    n = len(file)
+    n = len(sequence)
     codon_matching = False
     indexes = []
     while i < n - 2:
-        codon = file[i:i+3]
+        codon = sequence[i:i+3]
         if not codon_matching:
             if codon == "ATG":
                 codon_matching = True

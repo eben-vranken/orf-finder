@@ -16,6 +16,7 @@ def parse_args():
     args.add_argument(
         "--orf",
         action="store_true",
+        default=True,
         help="Identify open reading frames (ORFs) by pairing start codons with in-frame stop codons."
     )
 

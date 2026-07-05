@@ -12,7 +12,7 @@ def load_sequence(sequence_location):
     
     return "".join(sequence_lines).upper()
 
-def parse_fasta(sequence_location):
+def parse_orf(sequence_location):
     sequence = load_sequence(sequence_location)
 
     i = 0
@@ -33,5 +33,26 @@ def parse_fasta(sequence_location):
                 codon_matching = False
                 indexes.append([start, i])
             i += 3
+
+    return indexes
+
+def parse_codons(sequence_location):
+    sequence = load_sequence(sequence_location)
+
+    i = 0
+    n = len(sequence)
+    indexes = {
+        "start": [],
+        "stop": [],
+    }
+    while i < n - 2:
+        codon = sequence[i:i+3]
+        if codon == "ATG":
+            indexes["start"].append(i)   
+
+        if codon in ("TAA", "TAG", "TGA"):
+             indexes["stop"].append([i, codon])   
+        
+        i += 3
 
     return indexes

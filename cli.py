@@ -1,4 +1,4 @@
-import reader
+import reader, formatter
 from argparse import ArgumentParser
 
 def parse_args():
@@ -28,4 +28,4 @@ if __name__ == "__main__":
 
     if args.codons:
         codons = reader.parse_codons(args.file)
-        print(codons)
+        formatter.print_codons(codons)
